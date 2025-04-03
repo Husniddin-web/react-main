@@ -1,35 +1,82 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [womens, setWomen] = useState([]);
+  const [mens, setMen] = useState([]);
+  const [bgColor, setBgColor] = useState("#5ae275");
+  function addName(e) {
+    if (e.target.value.trim() != "") {
+      if (e.key == "Enter") {
+        const name = e.target.value;
+        setMen((prevMens) => [...prevMens, name]);
+        e.target.value = "";
+      }
+    }
+  }
+  function addWomenName(e) {
+    console.log(e.key);
+    if (e.target.value.trim() != "") {
+      if (e.key == "Enter") {
+        const name = e.target.value;
+        setWomen((prevMens) => [...prevMens, name]);
+        e.target.value = "";
+      }
+    }
+  }
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container">
+        <div className="men-container">
+          <div className="men-input">
+            <input
+              type="text"
+              placeholder="Enter men's name..."
+              onKeyDown={addName}
+            />
+          </div>
+          <div className="list">
+            {mens.map((val, index) => {
+              return (
+                <h1 className="name" key={index}>
+                  {val}
+                </h1>
+              );
+            })}
+          </div>
+        </div>
+        <div className="women-container">
+          <div className="women-input">
+            <input
+              type="text"
+              placeholder="Enter women's name..."
+              onKeyDown={addWomenName}
+            />
+          </div>
+          <div className="list">
+            {womens.map((val, index) => {
+              return (
+                <h1 className="name" key={index}>
+                  {val}
+                </h1>
+              );
+            })}
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="container">
+        <div className="color-wrapper">
+          <div style={{ backgroundColor: bgColor }} className="color"></div>
+          <div className="input-color">
+            <input type="color" onChange={(e) => setBgColor(e.target.value)} />
+          </div>
+          <div className="get-color">
+            <input type="text" readOnly name="" id="" value={bgColor} />
+          </div>
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
